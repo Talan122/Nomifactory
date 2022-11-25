@@ -3,6 +3,7 @@ import crafttweaker.item.IItemStack;
 import crafttweaker.item.IIngredient;
 import crafttweaker.data.IData;
 import scripts.CommonVars.makeShaped as makeShaped;
+import scripts.CommonVars.makeShapedF as makeShapedF;
 
 recipes.addShapeless(<appliedenergistics2:network_tool>, [<ore:itemIlluminatedPanel>, <actuallyadditions:item_laser_wrench>]);
 
@@ -26,19 +27,21 @@ recipes.addShaped(<gregtech:machine:2199>, [[<gregtech:meta_item_1:12072>, <greg
 recipes.addShaped(<gregtech:machine:2197>, [[<gregtech:meta_item_1:12184>, <gregtech:meta_item_1:12184>, <gregtech:meta_item_1:12184>],[<gregtech:meta_item_1:12184>, <minecraft:bucket>, <gregtech:meta_item_1:12184>], [<gregtech:meta_item_1:12184>, <gregtech:meta_item_1:12184>, <gregtech:meta_item_1:12184>]]);
 recipes.addShaped(<gregtech:machine:2196>, [[<gregtech:meta_item_1:12095>, <gregtech:meta_item_1:12095>, <gregtech:meta_item_1:12095>],[<gregtech:meta_item_1:12095>, <minecraft:bucket>, <gregtech:meta_item_1:12095>], [<gregtech:meta_item_1:12095>, <gregtech:meta_item_1:12095>, <gregtech:meta_item_1:12095>]]);
 
-recipes.remove(<thermalexpansion:satchel:2>);
-recipes.addShaped("test", <thermalexpansion:satchel:2>, [
-	[null, <gregtech:meta_item_1:9112>, null],
-	[<gregtech:meta_item_1:10001>, <thermalexpansion:satchel:1>.marked("satchel"), <gregtech:meta_item_1:10001>], 
-	[<gregtech:meta_item_1:9112>, null, <gregtech:meta_item_1:9112>]],
-	function(out, ins, cInfo) {
-    var tag = {} as IData;
-    # This if is here to keep the tinkers workbench from screwing up JEI autocomplete
-    if(ins has "satchel" && !isNull(ins.satchel) && ins.satchel.hasTag) {
-        tag = ins.satchel.tag;
-    }
-    return out.withTag(tag);
-}, null);
+recipes.removeByRecipeName("thermalexpansion:satchel_3");
+makeShapedF("nf_reinforced_satchel",
+            <thermalexpansion:satchel:2>,
+            [" N ",
+             "ISI",
+             "N N"],
+            { N : <metaitem:nuggetElectrum>,
+              I : <metaitem:ingotAluminium>,
+              S : <thermalexpansion:satchel:1>.marked("satchel") },
+            function(out, ins, cinfo) {
+                if(ins.satchel.hasTag) {
+                    return out.withTag(ins.satchel.tag);
+                }
+                return out;
+            });
 
 //red lens
 lathe.findRecipe(16, [<gregtech:meta_item_1:12154>], [null]).remove();	
@@ -187,14 +190,14 @@ fermenter.recipeBuilder().fluidInputs([<liquid:canolaoil> * 100]).fluidOutputs([
 
 //Canola
 
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:canolaoil> * 1000,<liquid:methanol> * 6000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:canolaoil> * 1000,<liquid:bio.ethanol> * 6000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:refinedcanolaoil> * 750,<liquid:methanol> * 4500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:refinedcanolaoil> * 750,<liquid:bio.ethanol> * 4500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:crystaloil> * 500,<liquid:methanol> * 3000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:crystaloil> * 500,<liquid:bio.ethanol> * 3000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:empoweredoil> * 250,<liquid:methanol> * 1500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
-reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:empoweredoil> * 250,<liquid:bio.ethanol> * 1500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:canolaoil> * 6000,<liquid:methanol> * 1000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:canolaoil> * 6000,<liquid:bio.ethanol> * 1000]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:refinedcanolaoil> * 4500,<liquid:methanol> * 750]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:refinedcanolaoil> * 4500,<liquid:bio.ethanol> * 750]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000,]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:crystaloil> * 3000,<liquid:methanol> * 500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:crystaloil> * 3000,<liquid:bio.ethanol> * 500]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:empoweredoil> * 1500,<liquid:methanol> * 250]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
+reactor.recipeBuilder().inputs(<gregtech:meta_item_1:373>).fluidInputs([<liquid:empoweredoil> * 1500,<liquid:bio.ethanol> * 250]).fluidOutputs([<liquid:glycerol> * 1000,<liquid:bio_diesel> * 6000]).duration(300).EUt(30).buildAndRegister();
 
 reactor.recipeBuilder().inputs(<actuallyadditions:item_misc:23>).fluidInputs([<liquid:canolaoil> * 1000]).fluidOutputs([<liquid:crystaloil> * 1000]).duration(100).EUt(120).buildAndRegister();
 reactor.recipeBuilder().inputs(<actuallyadditions:item_misc:24>).fluidInputs([<liquid:canolaoil> * 1000]).fluidOutputs([<liquid:empoweredoil> * 1000]).duration(100).EUt(500).buildAndRegister();
@@ -319,4 +322,19 @@ fluid_canner.recipeBuilder()
 	.fluidInputs(<liquid:xpjuice> * 500)
 	.outputs(<minecraft:experience_bottle>)
 	.duration(1500).EUt(4).buildAndRegister();
+
+// Re-add recipes related to Resonating Redstone Crystal, broken when 'gemRedstone' removed
+mods.thermalexpansion.Compactor.addGearRecipe(<extrautils2:ingredients:1>, <extrautils2:ingredients:0> * 4, 4000);
+
+mods.thermalexpansion.Compactor.addStorageRecipe(<metaitem:plateRedstone>, <extrautils2:ingredients:0>, 4000);
+
+fluid_extractor.recipeBuilder()
+    .fluidOutputs([<liquid:redstone> * 144])
+    .inputs([<extrautils2:ingredients:0>])
+    .duration(80).EUt(32).buildAndRegister();
+
+macerator.recipeBuilder()
+    .outputs([<minecraft:redstone>])
+    .inputs([<extrautils2:ingredients:0>])
+    .duration(30).EUt(8).buildAndRegister();
 
